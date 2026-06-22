@@ -52,7 +52,7 @@
 <body class="antialiased h-screen flex overflow-hidden">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r border-msi-border flex flex-col flex-shrink-0 z-20 shadow-sm">
+    <aside id="sidebar" class="w-64 bg-white border-r border-msi-border flex flex-col flex-shrink-0 z-20 shadow-sm">
         <!-- Logo -->
         <div class="p-4 flex justify-center items-center border-b border-msi-border h-[110px]">
             <img src="https://e-ipo.co.id/en/pipeline/get-logo?id=271" alt="Mastersystem Logo" class="w-full max-w-[200px] h-full object-contain">
@@ -92,7 +92,7 @@
         <!-- Top Header -->
         <header class="bg-white border-b border-msi-border h-[72px] flex items-center justify-between px-8 shrink-0 z-10 shadow-sm">
             <div class="flex items-center gap-4">
-                <button class="p-1.5 rounded-lg border border-gray-200 text-msi-red hover:bg-gray-50 transition-colors">
+                <button id="toggle-sidebar" class="p-1.5 rounded-lg border border-gray-200 text-msi-red hover:bg-gray-50 transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
                 <div>
@@ -373,6 +373,11 @@
             legend: { position: 'bottom', labels: { colors: '#495057' } }
         };
         new ApexCharts(document.querySelector("#chart-bar-isp"), barIspOptions).render();
+
+        // Sidebar Toggle Logic
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('hidden');
+        });
     </script>
 </body>
 </html>
