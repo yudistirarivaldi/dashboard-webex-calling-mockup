@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Webex Calling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        msi: {
+                            bg: '#f8f9fa',
+                            card: '#ffffff',
+                            border: '#e9ecef',
+                            red: '#D32F2F',
+                            lightred: '#fff0f0',
+                            text: '#495057',
+                            muted: '#868e96',
+                            green: '#22c55e',
+                            purple: '#8b5cf6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8f9fa; color: #495057; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dee2e6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ced4da; }
+    </style>
+</head>
+<body class="antialiased h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-msi-border flex flex-col flex-shrink-0 z-20 shadow-sm">
+        <div class="p-4 flex justify-center items-center border-b border-msi-border h-[110px]">
+            <img src="https://e-ipo.co.id/en/pipeline/get-logo?id=271" alt="Mastersystem Logo" class="w-full max-w-[200px] h-full object-contain">
+        </div>
+        
+        <div class="p-4 flex-1 overflow-y-auto mt-2">
+            <p class="text-[10px] font-bold text-msi-muted mb-4 px-2 tracking-widest uppercase">Main Menu</p>
+            <nav class="space-y-1.5">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 text-msi-muted hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium text-sm transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    Dashboard
+                </a>
+                <a href="report.html" class="flex items-center gap-3 px-4 py-2.5 bg-msi-lightred text-msi-red rounded-xl font-semibold text-sm transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Reports
+                </a>
+            </nav>
+        </div>
+        
+        <div class="p-4 border-t border-msi-border bg-white">
+            <div class="flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer p-2 rounded-xl border border-gray-100 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-msi-red text-white flex items-center justify-center font-bold text-xs shadow-sm">AD</div>
+                    <div class="overflow-hidden">
+                        <p class="text-sm font-bold text-gray-800 leading-tight">admin</p>
+                        <p class="text-[9px] text-msi-muted font-bold truncate w-24 tracking-wider mt-0.5">ADMIN@MASTER...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-msi-bg">
+        <!-- Top Header -->
+        <header class="bg-white border-b border-msi-border h-[72px] flex items-center justify-between px-8 shrink-0 z-10 shadow-sm">
+            <div class="flex items-center gap-4">
+                <button class="p-1.5 rounded-lg border border-gray-200 text-msi-red hover:bg-gray-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <div>
+                    <h1 class="text-base font-bold text-gray-900 leading-tight">Call Detail Records (CDR)</h1>
+                    <p class="text-[11px] font-semibold text-msi-muted mt-0.5">Detailed view of all calling activities</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto p-8">
+            <div class="max-w-7xl mx-auto space-y-6">
+                
+                <div class="bg-white border border-msi-border rounded-2xl shadow-sm flex flex-col h-[calc(100vh-140px)]">
+                    <!-- Toolbar -->
+                    <div class="p-5 border-b border-msi-border flex justify-between items-center bg-gray-50/50 rounded-t-2xl">
+                        <div class="flex gap-3">
+                            <div class="relative">
+                                <input type="text" placeholder="Search by number or user..." class="pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg text-gray-600 focus:outline-none focus:border-msi-red focus:ring-1 focus:ring-msi-red w-64 shadow-sm transition-all">
+                                <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <button class="px-4 py-2 bg-white border border-gray-200 text-sm font-semibold text-gray-700 rounded-lg shadow-sm hover:bg-gray-50 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                                Filter
+                            </button>
+                        </div>
+                        <button class="px-4 py-2 bg-msi-red text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-red-700 flex items-center gap-2 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Export CSV
+                        </button>
+                    </div>
+                    
+                    <!-- Table Container -->
+                    <div class="flex-1 overflow-auto p-0">
+                        <table class="w-full text-left border-collapse whitespace-nowrap">
+                            <thead class="sticky top-0 z-10 bg-white">
+                                <tr class="text-[10px] font-bold text-msi-muted tracking-wider uppercase border-b border-gray-200">
+                                    <th class="py-4 px-6">Date & Time</th>
+                                    <th class="py-4 px-6">User</th>
+                                    <th class="py-4 px-6">Calling Number</th>
+                                    <th class="py-4 px-6">Called Number</th>
+                                    <th class="py-4 px-6">Direction</th>
+                                    <th class="py-4 px-6">Call Type</th>
+                                    <th class="py-4 px-6 text-right">Duration (s)</th>
+                                    <th class="py-4 px-6 text-center">Outcome</th>
+                                </tr>
+                            </thead>
+                            <tbody id="report-table-body" class="text-sm">
+                                <!-- Data will be populated here via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination Footer -->
+                    <div class="p-4 border-t border-msi-border flex items-center justify-between text-xs text-msi-muted">
+                        <span>Showing <span class="font-bold text-gray-700">1</span> to <span class="font-bold text-gray-700">5</span> of <span class="font-bold text-gray-700">124</span> entries</span>
+                        <div class="flex items-center gap-1">
+                            <button class="px-3 py-1.5 border border-gray-200 rounded-md hover:bg-gray-50 disabled:opacity-50">Previous</button>
+                            <button class="px-3 py-1.5 bg-msi-red text-white rounded-md font-medium shadow-sm">1</button>
+                            <button class="px-3 py-1.5 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600">2</button>
+                            <button class="px-3 py-1.5 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600">3</button>
+                            <span class="px-2">...</span>
+                            <button class="px-3 py-1.5 border border-gray-200 rounded-md hover:bg-gray-50">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dummy data provided by the user + a few extras for visual weight
+        const cdrData = [
+            {
+                "Start time": "2026-06-09T15:00:31.283Z",
+                "Duration": 7,
+                "Calling number": "622157901212",
+                "Called number": "4002",
+                "User": "demowxcc1",
+                "Location": "Jakarta",
+                "Direction": "TERMINATING",
+                "Call type": "SIP_ENTERPRISE",
+                "Call outcome": "Success"
+            },
+            {
+                "Start time": "2026-06-09T15:05:12.100Z",
+                "Duration": 45,
+                "Calling number": "62811928374",
+                "Called number": "4005",
+                "User": "demowxcc2",
+                "Location": "Jakarta",
+                "Direction": "ORIGINATING",
+                "Call type": "PSTN",
+                "Call outcome": "Success"
+            },
+            {
+                "Start time": "2026-06-09T15:10:00.000Z",
+                "Duration": 0,
+                "Calling number": "4002",
+                "Called number": "4008",
+                "User": "demowxcc1",
+                "Location": "Jakarta",
+                "Direction": "INTERNAL",
+                "Call type": "SIP_ENTERPRISE",
+                "Call outcome": "Failed"
+            },
+            {
+                "Start time": "2026-06-09T15:15:22.450Z",
+                "Duration": 120,
+                "Calling number": "622157901919",
+                "Called number": "4002",
+                "User": "demowxcc1",
+                "Location": "Jakarta",
+                "Direction": "TERMINATING",
+                "Call type": "TEAMS_WXC",
+                "Call outcome": "Success"
+            },
+            {
+                "Start time": "2026-06-09T15:20:11.200Z",
+                "Duration": 18,
+                "Calling number": "4005",
+                "Called number": "62812998877",
+                "User": "demowxcc2",
+                "Location": "Jakarta",
+                "Direction": "ORIGINATING",
+                "Call type": "PSTN",
+                "Call outcome": "Success"
+            }
+        ];
+
+        const tbody = document.getElementById('report-table-body');
+        
+        cdrData.forEach(row => {
+            const dateObj = new Date(row["Start time"]);
+            const dateFormatted = dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timeFormatted = dateObj.toLocaleTimeString('en-US', { hour12: false });
+            
+            let outcomeBadge = '';
+            if(row["Call outcome"] === 'Success') {
+                outcomeBadge = '<span class="px-2.5 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-md uppercase tracking-wider">Success</span>';
+            } else {
+                outcomeBadge = '<span class="px-2.5 py-1 bg-red-100 text-red-700 text-[10px] font-bold rounded-md uppercase tracking-wider">Failed</span>';
+            }
+
+            let directionBadge = '';
+            if(row.Direction === 'TERMINATING') {
+                directionBadge = '<span class="text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded text-xs">IN</span>';
+            } else if (row.Direction === 'ORIGINATING') {
+                directionBadge = '<span class="text-purple-600 font-semibold bg-purple-50 px-2 py-0.5 rounded text-xs">OUT</span>';
+            } else {
+                directionBadge = '<span class="text-gray-600 font-semibold bg-gray-100 px-2 py-0.5 rounded text-xs">INT</span>';
+            }
+
+            const tr = document.createElement('tr');
+            tr.className = 'border-b border-gray-100 hover:bg-gray-50/50 transition-colors';
+            tr.innerHTML = `
+                <td class="py-4 px-6">
+                    <div class="font-bold text-gray-800">${timeFormatted}</div>
+                    <div class="text-[10px] text-msi-muted font-bold mt-0.5">${dateFormatted}</div>
+                </td>
+                <td class="py-4 px-6 font-bold text-msi-red">${row.User}</td>
+                <td class="py-4 px-6 font-medium text-gray-700">${row["Calling number"]}</td>
+                <td class="py-4 px-6 font-medium text-gray-700">${row["Called number"]}</td>
+                <td class="py-4 px-6">${directionBadge} <span class="text-xs text-gray-500 ml-1">${row.Direction}</span></td>
+                <td class="py-4 px-6 text-xs font-semibold text-gray-600">${row["Call type"]}</td>
+                <td class="py-4 px-6 text-right font-bold ${row.Duration > 0 ? 'text-gray-800' : 'text-gray-400'}">${row.Duration}s</td>
+                <td class="py-4 px-6 text-center">${outcomeBadge}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    </script>
+</body>
+</html>

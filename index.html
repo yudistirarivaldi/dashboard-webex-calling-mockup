@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webex Calling Dashboard</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        msi: {
+                            bg: '#f8f9fa',
+                            card: '#ffffff',
+                            border: '#e9ecef',
+                            red: '#D32F2F',
+                            lightred: '#fff0f0',
+                            text: '#495057',
+                            muted: '#868e96',
+                            green: '#22c55e',
+                            purple: '#8b5cf6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dee2e6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ced4da; }
+    </style>
+</head>
+<body class="antialiased h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-msi-border flex flex-col flex-shrink-0 z-20 shadow-sm">
+        <!-- Logo -->
+        <div class="p-4 flex justify-center items-center border-b border-msi-border h-[110px]">
+            <img src="https://e-ipo.co.id/en/pipeline/get-logo?id=271" alt="Mastersystem Logo" class="w-full max-w-[200px] h-full object-contain">
+        </div>
+        
+        <!-- Menu -->
+        <div class="p-4 flex-1 overflow-y-auto mt-2">
+            <p class="text-[10px] font-bold text-msi-muted mb-4 px-2 tracking-widest uppercase">Main Menu</p>
+            <nav class="space-y-1.5">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 bg-msi-lightred text-msi-red rounded-xl font-semibold text-sm transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    Dashboard
+                </a>
+                <a href="report.html" class="flex items-center gap-3 px-4 py-2.5 text-msi-muted hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium text-sm transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Reports
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Profile -->
+        <div class="p-4 border-t border-msi-border bg-white">
+            <div class="flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer p-2 rounded-xl border border-gray-100 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-msi-red text-white flex items-center justify-center font-bold text-xs shadow-sm">AD</div>
+                    <div class="overflow-hidden">
+                        <p class="text-sm font-bold text-gray-800 leading-tight">admin</p>
+                        <p class="text-[9px] text-msi-muted font-bold truncate w-24 tracking-wider mt-0.5">ADMIN@MASTER...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-msi-bg">
+        <!-- Top Header -->
+        <header class="bg-white border-b border-msi-border h-[72px] flex items-center justify-between px-8 shrink-0 z-10 shadow-sm">
+            <div class="flex items-center gap-4">
+                <button class="p-1.5 rounded-lg border border-gray-200 text-msi-red hover:bg-gray-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <div>
+                    <h1 class="text-base font-bold text-gray-900 leading-tight">Webex Calling Dashboard</h1>
+                    <p class="text-[11px] font-semibold text-msi-muted mt-0.5">Analytics & Quality Overview</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto p-8">
+            <div class="max-w-7xl mx-auto space-y-6">
+                <!-- KPI Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white border border-msi-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                        <p class="text-[11px] font-bold text-msi-muted tracking-widest uppercase mb-2">Total calls (Webex Calling)</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-3xl font-extrabold text-msi-red">40</span>
+                            <span class="text-xs font-bold text-msi-green">↑ 1.23%</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-msi-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                        <p class="text-[11px] font-bold text-msi-muted tracking-widest uppercase mb-2">Calls with media</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-3xl font-extrabold text-msi-red">40</span>
+                        </div>
+                        <p class="text-[10px] font-semibold text-msi-muted mt-1">100% of total calls</p>
+                    </div>
+                    <div class="bg-white border border-msi-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                        <p class="text-[11px] font-bold text-msi-muted tracking-widest uppercase mb-2">Good quality calls</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-3xl font-extrabold text-msi-red">90%</span>
+                            <span class="text-xs font-bold text-msi-red">↓ 10%</span>
+                        </div>
+                        <p class="text-[10px] font-semibold text-msi-muted mt-1">36 calls</p>
+                    </div>
+                    <div class="bg-white border border-msi-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                        <p class="text-[11px] font-bold text-msi-muted tracking-widest uppercase mb-2">Media sessions</p>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="text-3xl font-extrabold text-msi-red">108</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Charts Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Donut Chart -->
+                    <div class="lg:col-span-1 bg-white border border-msi-border rounded-2xl p-6 min-h-[300px] shadow-sm flex flex-col">
+                        <h3 class="text-sm font-bold text-gray-800 mb-4">Media sessions by quality</h3>
+                        <div id="chart-donut" class="flex-1 w-full flex items-center justify-center"></div>
+                    </div>
+
+                    <!-- Line Chart -->
+                    <div class="lg:col-span-2 bg-white border border-msi-border rounded-2xl p-6 min-h-[300px] shadow-sm flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-sm font-bold text-gray-800">Media session audio jitter</h3>
+                            <div class="flex bg-gray-50 rounded-md border border-gray-200 overflow-hidden">
+                                <button class="px-3 py-1 text-xs font-bold text-msi-red bg-msi-lightred">Daily</button>
+                                <button class="px-3 py-1 text-xs font-medium text-msi-muted hover:bg-gray-100 transition-colors">Weekly</button>
+                                <button class="px-3 py-1 text-xs font-medium text-msi-muted hover:bg-gray-100 transition-colors">Monthly</button>
+                            </div>
+                        </div>
+                        <div id="chart-line" class="flex-1 w-full"></div>
+                    </div>
+                </div>
+
+                <!-- Breakdown Charts Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Bar Chart 1 -->
+                    <div class="bg-white border border-msi-border rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-sm font-bold text-gray-800 mb-4">Media sessions by country</h3>
+                        <div id="chart-bar-country"></div>
+                    </div>
+
+                    <!-- Bar Chart 2 -->
+                    <div class="bg-white border border-msi-border rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-sm font-bold text-gray-800 mb-4">Media sessions by connection type</h3>
+                        <div id="chart-bar-connection"></div>
+                    </div>
+                </div>
+
+                <!-- Additional Charts Row (Packet Loss & ISP) -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Line Chart (Packet Loss) -->
+                    <div class="lg:col-span-2 bg-white border border-msi-border rounded-2xl p-6 min-h-[300px] shadow-sm flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-sm font-bold text-gray-800">Media session audio packet loss</h3>
+                            <div class="flex bg-gray-50 rounded-md border border-gray-200 overflow-hidden">
+                                <button class="px-3 py-1 text-xs font-bold text-msi-red bg-msi-lightred">Daily</button>
+                                <button class="px-3 py-1 text-xs font-medium text-msi-muted hover:bg-gray-100 transition-colors">Weekly</button>
+                                <button class="px-3 py-1 text-xs font-medium text-msi-muted hover:bg-gray-100 transition-colors">Monthly</button>
+                            </div>
+                        </div>
+                        <div id="chart-line-packet" class="flex-1 w-full"></div>
+                    </div>
+
+                    <!-- Bar Chart (ISP) -->
+                    <div class="lg:col-span-1 bg-white border border-msi-border rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-sm font-bold text-gray-800 mb-4">Media sessions by ISP</h3>
+                        <div id="chart-bar-isp"></div>
+                    </div>
+                </div>
+
+                <!-- Table Row -->
+                <div class="bg-white border border-msi-border rounded-2xl p-6 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-sm font-bold text-gray-800">Users with worst calling experience</h3>
+                        <div class="relative">
+                            <input type="text" placeholder="Search user..." class="pl-8 pr-4 py-1.5 text-xs border border-gray-200 rounded-full text-gray-600 focus:outline-none focus:border-msi-red w-48 shadow-sm">
+                            <svg class="w-3.5 h-3.5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="text-[10px] font-bold text-msi-muted tracking-wider uppercase border-b border-gray-100">
+                                    <th class="py-3 px-4">Name</th>
+                                    <th class="py-3 px-4">Email</th>
+                                    <th class="py-3 px-4 text-right">Total Media Sessions</th>
+                                    <th class="py-3 px-4 text-right">Poor Media Sessions</th>
+                                    <th class="py-3 px-4 text-right">% Poor Media Sessions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-xs">
+                                <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                                    <td class="py-4 px-4 font-bold text-msi-red cursor-pointer hover:underline">demowxcc2</td>
+                                    <td class="py-4 px-4 text-gray-600">demowxcc2@gmail.com</td>
+                                    <td class="py-4 px-4 text-right font-bold text-gray-700">80</td>
+                                    <td class="py-4 px-4 text-right font-bold text-msi-red">10</td>
+                                    <td class="py-4 px-4 text-right font-bold text-gray-700">12.5%</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition-colors">
+                                    <td class="py-4 px-4 font-bold text-msi-red cursor-pointer hover:underline">demowxcc1</td>
+                                    <td class="py-4 px-4 text-gray-600">demowxcc1@gmail.com</td>
+                                    <td class="py-4 px-4 text-right font-bold text-gray-700">28</td>
+                                    <td class="py-4 px-4 text-right font-bold text-gray-700">0</td>
+                                    <td class="py-4 px-4 text-right font-bold text-gray-700">0%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts for Charts -->
+    <script>
+        const chartTheme = { mode: 'light', palette: 'palette1' };
+        const fontFamily = 'Inter, sans-serif';
+
+        // 1. Donut Chart (Quality)
+        const donutOptions = {
+            series: [100, 8],
+            chart: { type: 'donut', height: 280, background: 'transparent', fontFamily },
+            labels: ['Good', 'Poor'],
+            colors: ['#22c55e', '#D32F2F'],
+            theme: chartTheme,
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '75%',
+                        labels: {
+                            show: true,
+                            name: { show: true, color: '#868e96' },
+                            value: { show: true, color: '#343a40', fontSize: '24px', fontWeight: 700 },
+                            total: { show: true, showAlways: true, label: 'Media sessions', color: '#868e96' }
+                        }
+                    }
+                }
+            },
+            dataLabels: { enabled: false },
+            stroke: { show: false },
+            legend: { position: 'bottom', labels: { colors: '#495057' }, markers: { radius: 12 } },
+        };
+        new ApexCharts(document.querySelector("#chart-donut"), donutOptions).render();
+
+        // 2. Line Chart (Jitter)
+        const lineOptions = {
+            series: [
+                { name: '90th percentile', data: [2, 2, 13, 5, 25, 2, 22, 15] },
+                { name: 'Average', data: [1, 1, 6, 4, 6, 2, 12, 9] }
+            ],
+            chart: { type: 'line', height: 280, background: 'transparent', toolbar: { show: false }, fontFamily },
+            colors: ['#D32F2F', '#8b5cf6'], // Red and Purple
+            theme: chartTheme,
+            stroke: { curve: 'straight', width: 2 },
+            xaxis: {
+                categories: ['5/26', '6/01', '6/02', '6/03', '6/04', '6/08', '6/09', '6/10'],
+                axisBorder: { show: false },
+                axisTicks: { show: false },
+                labels: { style: { colors: '#868e96', fontWeight: 500 } }
+            },
+            yaxis: {
+                title: { text: 'Jitter (ms)', style: { color: '#868e96', fontWeight: 600 } },
+                labels: { style: { colors: '#868e96', fontWeight: 500 } }
+            },
+            grid: {
+                borderColor: '#e9ecef',
+                strokeDashArray: 0,
+                xaxis: { lines: { show: false } },
+                yaxis: { lines: { show: true } }
+            },
+            legend: { position: 'bottom', labels: { colors: '#495057' } }
+        };
+        new ApexCharts(document.querySelector("#chart-line"), lineOptions).render();
+
+        // 3. Bar Chart - Country
+        const barCountryOptions = {
+            series: [{ name: 'Good', data: [100] }, { name: 'Poor', data: [8] }],
+            chart: { type: 'bar', height: 180, stacked: true, background: 'transparent', toolbar: { show: false }, fontFamily },
+            colors: ['#22c55e', '#D32F2F'],
+            theme: chartTheme,
+            plotOptions: { bar: { horizontal: true, barHeight: '40%' } },
+            xaxis: { categories: ['Indonesia'], labels: { style: { colors: '#868e96' } }, axisBorder: { color: '#e9ecef' } },
+            yaxis: { labels: { style: { colors: '#495057', fontWeight: 600 } } },
+            grid: { borderColor: '#e9ecef', xaxis: { lines: { show: true } }, yaxis: { lines: { show: false } } },
+            legend: { position: 'bottom', labels: { colors: '#495057' } }
+        };
+        new ApexCharts(document.querySelector("#chart-bar-country"), barCountryOptions).render();
+
+        // 4. Bar Chart - Connection
+        const barConnectionOptions = {
+            series: [{ name: 'Good', data: [90, 10] }, { name: 'Poor', data: [8, 0] }],
+            chart: { type: 'bar', height: 180, stacked: true, background: 'transparent', toolbar: { show: false }, fontFamily },
+            colors: ['#22c55e', '#D32F2F'],
+            theme: chartTheme,
+            plotOptions: { bar: { horizontal: true, barHeight: '40%' } },
+            xaxis: { categories: ['Wifi', 'Ethernet'], labels: { style: { colors: '#868e96' } }, axisBorder: { color: '#e9ecef' } },
+            yaxis: { labels: { style: { colors: '#495057', fontWeight: 600 } } },
+            grid: { borderColor: '#e9ecef', xaxis: { lines: { show: true } }, yaxis: { lines: { show: false } } },
+            legend: { position: 'bottom', labels: { colors: '#495057' } }
+        };
+        new ApexCharts(document.querySelector("#chart-bar-connection"), barConnectionOptions).render();
+
+        // 5. Line Chart - Packet Loss
+        const linePacketOptions = {
+            series: [
+                { name: '90th percentile', data: [0, 15, 5, 0, 6, 0, 1, 2] },
+                { name: 'Average', data: [0, 7, 2, 0, 1, 0, 0, 1] }
+            ],
+            chart: { type: 'line', height: 280, background: 'transparent', toolbar: { show: false }, fontFamily },
+            colors: ['#D32F2F', '#8b5cf6'], // Red and Purple
+            theme: chartTheme,
+            stroke: { curve: 'straight', width: 2 },
+            xaxis: {
+                categories: ['5/26', '6/01', '6/02', '6/03', '6/04', '6/08', '6/09', '6/10'],
+                axisBorder: { show: false },
+                axisTicks: { show: false },
+                labels: { style: { colors: '#868e96', fontWeight: 500 } }
+            },
+            yaxis: {
+                title: { text: 'Packet Loss (%)', style: { color: '#868e96', fontWeight: 600 } },
+                labels: { style: { colors: '#868e96', fontWeight: 500 }, formatter: function(val) { return val + "%" } }
+            },
+            grid: {
+                borderColor: '#e9ecef',
+                strokeDashArray: 0,
+                xaxis: { lines: { show: false } },
+                yaxis: { lines: { show: true } }
+            },
+            legend: { position: 'bottom', labels: { colors: '#495057' } }
+        };
+        new ApexCharts(document.querySelector("#chart-line-packet"), linePacketOptions).render();
+
+        // 6. Bar Chart - ISP
+        const barIspOptions = {
+            series: [{ name: 'Good', data: [18, 19] }, { name: 'Poor', data: [4, 2] }],
+            chart: { type: 'bar', height: 280, stacked: true, background: 'transparent', toolbar: { show: false }, fontFamily },
+            colors: ['#22c55e', '#D32F2F'],
+            theme: chartTheme,
+            plotOptions: { bar: { horizontal: true, barHeight: '40%' } },
+            xaxis: { categories: ['AMAZON-02', 'PT. Eka Mas Republ...'], labels: { style: { colors: '#868e96' } }, axisBorder: { color: '#e9ecef' } },
+            yaxis: { labels: { style: { colors: '#495057', fontWeight: 600 } } },
+            grid: { borderColor: '#e9ecef', xaxis: { lines: { show: true } }, yaxis: { lines: { show: false } } },
+            legend: { position: 'bottom', labels: { colors: '#495057' } }
+        };
+        new ApexCharts(document.querySelector("#chart-bar-isp"), barIspOptions).render();
+    </script>
+</body>
+</html>
